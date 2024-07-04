@@ -39,7 +39,7 @@
                 <a href="{{route('account.myReviews')}}">My Reviews</a>
             </li>
             <li class="nav-item">
-                <a href="change-password.html">Change Password</a>
+                <a href="{{route('account.changePassword')}}">Change Password</a>
             </li>
             <li class="nav-item">
                 <a href="{{route('account.logout')}}">Logout</a>

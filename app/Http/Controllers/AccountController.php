@@ -184,4 +184,35 @@ class AccountController extends Controller
             ]);
         }
     }
+
+    public function changePassword()
+    {
+        return view('account.change-password');
+    }
+    public function updatePassword(Request $request)
+    {
+
+        // Validation
+        $validator = Validator::make($request->all(), [
+            'old_password' => 'required',
+            'new_password' => 'required|min:8|confirmed',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $user = Auth::user();
+
+        // Check if old password matches
+        if (!Hash::check($request->old_password, $user->password)) {
+            return redirect()->back()->with('error', 'Old password does not match.');
+        }
+
+        // Update the password
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return redirect()->back()->with('success', 'Password updated successfully.');
+    }
 }
